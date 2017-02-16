@@ -41,10 +41,10 @@ stat.do-time                                   = true
 
 breed                                          = ec.multiobjective.nsga2.NSGA2Breeder
 
-generations                                    = 100
+generations                                    = 51
 
 pop.subpops		                               = 1
-pop.subpop.0.size 	                           = 30
+pop.subpop.0.size 	                           = 500
 pop.subpop.0.duplicate-retries 	               = 0
 pop.subpop.0.species                           = wsc.WSCSpecies
 pop.subpop.0.species.ind                       = wsc.WSCIndividual

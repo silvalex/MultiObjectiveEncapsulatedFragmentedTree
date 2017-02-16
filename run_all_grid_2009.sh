@@ -1,7 +1,5 @@
 #!/bin/sh
 
-need sgegrid
-
 NUM_RUNS=50
 
 for i in {1..5}; do
