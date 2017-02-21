@@ -57,8 +57,27 @@ public class WSCSpecies extends Species {
 	    }
 	}
 
-
 	public Set<Service> findPredecessors(WSCInitializer init, Service s) {
+
+
+		if (!WSCInitializer.countFragments) {
+			// Consult encapsulated map
+			Set<String> encapsulatedPredecessorNames = init.encapsulatedFragmentMap.get(s.name);
+			// If there is an encapsulated fragment, use it
+			if (encapsulatedPredecessorNames != null) {
+				Set<Service> encapsulatedPredecessors = new HashSet<Service>();
+				for (String p: encapsulatedPredecessorNames) {
+					Service predecessor;
+					if (p.equals("start"))
+						predecessor = init.startServ;
+					else
+						predecessor = init.serviceMap.get(p);
+					encapsulatedPredecessors.add(predecessor);
+				}
+				return encapsulatedPredecessors;
+			}
+		}
+
 		Set<Service> predecessors = new HashSet<Service>();
 
 		// Get only inputs that are not subsumed by the given composition inputs

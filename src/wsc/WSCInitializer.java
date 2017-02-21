@@ -1,14 +1,18 @@
 package wsc;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 import java.util.Queue;
+import java.util.Scanner;
 import java.util.Set;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -61,6 +65,21 @@ public class WSCInitializer extends SimpleInitializer {
 
 	public static long setupTime;
 
+	/* Create a count of fragments for encapsulation. This is a map where
+	 * the key is a string representation of the fragment, and the value
+	 * is the count of how many times it has appeared. The key string has
+	 * the following structure: "serv7|serv1|serv2", where serv7 is the name
+	 * of the root fragment, | is a separator, and serv1, serv2 are the
+	 * predecessors in the fragment, ordered alphabetically. The keys are
+	 * organised in this way so that fragments can be easily recreated from
+	 * them.*/
+	public static Map<String, Integer> fragmentCountMap;
+	public static  Map<String, Set<String>> encapsulatedFragmentMap;
+	public static boolean countFragments;
+	public static File fragmentLogFile;
+	public static File encapsulatedFile;
+	public static int numEncapsulated;
+
 	@Override
 	public void setup(EvolutionState state, Parameter base) {
 		long startTime = System.currentTimeMillis();
@@ -77,11 +96,28 @@ public class WSCInitializer extends SimpleInitializer {
 		Parameter weight2Param = new Parameter("fitness-weight2");
 		Parameter weight3Param = new Parameter("fitness-weight3");
 		Parameter weight4Param = new Parameter("fitness-weight4");
+		Parameter countFragmentsParam = new Parameter("count-fragments");
+		Parameter fragmentLogParam = new Parameter("fragment-log");
+		Parameter encapsulatedFileParam = new Parameter("encapsulated-file");
+		Parameter numEncapsulatedParam = new Parameter("num-encapsulated-fragments");
 
 		w1 = state.parameters.getDouble(weight1Param, null);
 		w2 = state.parameters.getDouble(weight2Param, null);
 		w3 = state.parameters.getDouble(weight3Param, null);
 		w4 = state.parameters.getDouble(weight4Param, null);
+		countFragments = state.parameters.getBoolean(countFragmentsParam, null, false);
+
+
+		if (countFragments) {
+			fragmentCountMap = new HashMap<String, Integer>();
+			fragmentLogFile = state.parameters.getFile(fragmentLogParam, null);
+		}
+		else {
+			encapsulatedFragmentMap = new HashMap<String, Set<String>>();
+			encapsulatedFile = state.parameters.getFile(encapsulatedFileParam, null);
+			numEncapsulated = state.parameters.getInt(numEncapsulatedParam, null);
+			readEncapsulatedFragments(encapsulatedFile, encapsulatedFragmentMap, numEncapsulated);
+		}
 
 		parseWSCServiceFile(state.parameters.getString(servicesParam, null));
 		parseWSCTaskFile(state.parameters.getString(taskParam, null));
@@ -104,6 +140,25 @@ public class WSCInitializer extends SimpleInitializer {
 		//calculateNormalisationBounds(relevant); XXX
 		calculateNormalisationBounds(new HashSet<Service>(serviceMap.values()));
 		setupTime = System.currentTimeMillis() - startTime;
+	}
+
+	private void readEncapsulatedFragments(File encapsulatedFile, Map<String, Set<String>> encapsulatedFragmentMap, int numFragments) {
+		Scanner scan;
+		int fragmentsRead = 0;
+		try {
+			scan = new Scanner(encapsulatedFile);
+			while (scan.hasNextLine() && fragmentsRead < numFragments) {
+				String line = scan.nextLine();
+				Fragment f = generateFragmentFromString(line);
+				encapsulatedFragmentMap.put(f.root, f.predecessors);
+				fragmentsRead++;
+			}
+			scan.close();
+		}
+		catch (FileNotFoundException e) {
+			System.err.printf("Problem when reading encapsulated file '%s'.\n", encapsulatedFile.getName());
+			e.printStackTrace();
+		}
 	}
 
 	/**
@@ -536,5 +591,50 @@ public class WSCInitializer extends SimpleInitializer {
 				}
 			}
 		}
+	}
+
+	class Fragment {
+		public String root;
+		public Set<String> predecessors;
+	}
+
+	public String generateStringFromFragment(String root, Set<String> predecessors) {
+		StringBuilder builder = new StringBuilder();
+		// Append root
+		builder.append(root);
+		builder.append("|");
+
+		// Sort predecessors
+		List<String> predecessorList = new ArrayList<String>(predecessors);
+		Collections.sort(predecessorList);
+
+		// Append predecessors
+		for (String s : predecessorList) {
+			builder.append(s);
+			builder.append("|");
+		}
+		return builder.toString();
+	}
+
+	public Fragment generateFragmentFromString(String s) {
+		// Split string at separator
+		String[] splitString = s.split("\\|");
+		Fragment f = new Fragment();
+
+		Set<String> predecessors = new HashSet<String>();
+		for (int i = 1; i < splitString.length; i++)
+			predecessors.add(splitString[i]);
+
+		f.root = splitString[0];
+		f.predecessors = predecessors;
+
+		return f;
+	}
+
+	public void updateFragmentCount(String s) {
+		if (fragmentCountMap.containsKey(s))
+			fragmentCountMap.put(s, fragmentCountMap.get(s) + 1);
+		else
+			fragmentCountMap.put(s,  1);
 	}
 }

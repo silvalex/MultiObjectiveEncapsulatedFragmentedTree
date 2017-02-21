@@ -41,7 +41,11 @@ stat.do-time                                   = true
 
 breed                                          = ec.multiobjective.nsga2.NSGA2Breeder
 
-generations                                    = 51
+generations                                    = 10
+count-fragments                                = false
+fragment-log                                   = $fragments.stat
+encapsulated-file                              = $encapsulated.stat
+num-encapsulated-fragments                     = 10
 
 pop.subpops		                               = 1
 pop.subpop.0.size 	                           = 500

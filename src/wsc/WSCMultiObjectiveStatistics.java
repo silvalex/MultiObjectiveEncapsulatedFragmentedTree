@@ -1,6 +1,9 @@
 package wsc;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Map.Entry;
 
 import ec.EvolutionState;
 import ec.Individual;
@@ -18,6 +21,18 @@ public class WSCMultiObjectiveStatistics extends MultiObjectiveStatistics {
 	public long evaluationTime;
 
 	private static final long serialVersionUID = 1L;
+	public int fragmentLog = 0; // 0 by default means stdout
+
+    public void createFragmentLog( final EvolutionState state ) {
+        File fragmentFile = WSCInitializer.fragmentLogFile;
+        if ( fragmentFile != null ) try {
+            fragmentLog = state.output.addLog( fragmentFile, true, false, false );
+        }
+        catch ( IOException i ) {
+            state.output.fatal( "An IOException occurred trying to create the log " + fragmentFile + ":\n" + i );
+        }
+        // else we will just keep the log at 0, which is stdout
+    }
 
 	@Override
     public void preInitializationStatistics(final EvolutionState state){
@@ -116,6 +131,13 @@ public class WSCMultiObjectiveStatistics extends MultiObjectiveStatistics {
 				}
 			}
 		}
+
+        // Now let's write the fragments log, if in encapsulation mode
+        if (WSCInitializer.countFragments) {
+        	createFragmentLog(state);
+            for (Entry<String, Integer> e : WSCInitializer.fragmentCountMap.entrySet())
+            	state.output.println(String.format("%s %d", e.getKey(), e.getValue()), fragmentLog);
+        }
 	}
 
 	/**

@@ -3,6 +3,7 @@ package wsc;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 
 import ec.EvolutionState;
@@ -62,6 +63,16 @@ public class WSC extends Problem implements SimpleProblemForm {
 			// Clean up the unused fragments
 			for (String s : fragmentsToRemove)
 			    tree.getPredecessorMap().remove( s );
+
+			// If performing encapsulation, add fragments to fragment count map
+			if (WSCInitializer.countFragments) {
+				for (Entry<String, Set<String>> e: tree.getPredecessorMap().entrySet()) {
+					// Generate string representation for fragment
+					String s = init.generateStringFromFragment(e.getKey(), e.getValue());
+					// Update fragment count
+					init.updateFragmentCount(s);
+				}
+			}
 		}
 	}
 
