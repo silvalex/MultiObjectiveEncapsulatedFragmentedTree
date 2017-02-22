@@ -79,6 +79,7 @@ public class WSCInitializer extends SimpleInitializer {
 	public static File fragmentLogFile;
 	public static File encapsulatedFile;
 	public static int numEncapsulated;
+	public static float selectEncapsulatedProb;
 
 	@Override
 	public void setup(EvolutionState state, Parameter base) {
@@ -100,6 +101,7 @@ public class WSCInitializer extends SimpleInitializer {
 		Parameter fragmentLogParam = new Parameter("fragment-log");
 		Parameter encapsulatedFileParam = new Parameter("encapsulated-file");
 		Parameter numEncapsulatedParam = new Parameter("num-encapsulated-fragments");
+		Parameter selectEncapsulatedProbParam = new Parameter("select-encapsulated-prob");
 
 		w1 = state.parameters.getDouble(weight1Param, null);
 		w2 = state.parameters.getDouble(weight2Param, null);
@@ -116,6 +118,7 @@ public class WSCInitializer extends SimpleInitializer {
 			encapsulatedFragmentMap = new HashMap<String, Set<String>>();
 			encapsulatedFile = state.parameters.getFile(encapsulatedFileParam, null);
 			numEncapsulated = state.parameters.getInt(numEncapsulatedParam, null);
+			selectEncapsulatedProb = state.parameters.getFloat(selectEncapsulatedProbParam, null);
 			readEncapsulatedFragments(encapsulatedFile, encapsulatedFragmentMap, numEncapsulated);
 		}
 

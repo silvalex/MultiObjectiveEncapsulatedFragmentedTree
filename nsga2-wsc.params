@@ -41,12 +41,24 @@ stat.do-time                                   = true
 
 breed                                          = ec.multiobjective.nsga2.NSGA2Breeder
 
-generations                                    = 10
+
+
+# If true, we are in phase I. Otherwise, we are in phase II.
 count-fragments                                = false
-fragment-log                                   = $fragments.stat
-encapsulated-file                              = $encapsulated.stat
+
+# In phase II, probability that fragment will be selected from encapsulated pool (if a suitable fragment exists)
+select-encapsulated-prob                       = 0.5
+
+# The number of top fragments to encapsulate in phase II
 num-encapsulated-fragments                     = 10
 
+# Where the fragments counted during phase I get recorded
+fragment-log                                   = $fragments.stat
+
+# Where to read in the fragments for phase II
+encapsulated-file                              = $encapsulated.stat
+
+generations                                    = 51
 pop.subpops		                               = 1
 pop.subpop.0.size 	                           = 500
 pop.subpop.0.duplicate-retries 	               = 0
