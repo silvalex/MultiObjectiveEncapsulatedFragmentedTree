@@ -5,5 +5,5 @@ BASE=/vol/grid-solar/sgeusers/sawczualex/MO_encapsulated/run1_2009/2009-fragment
 FILE=/encapsulated.stat
 
 for i in {1..5}; do
-  qsub -t 1-$NUM_RUNS:1 encapsulated_fragmented_tree.sh ~/workspace/wsc2009/Testset0${i} 2009-encapsulated_fragmented-tree${i} nsga2-wsc.params false $BASE${i}$FILE;
+  qsub -t 1-$NUM_RUNS:1 encapsulated_fragmented_tree.sh ~/workspace/wsc2009/Testset0${i} 2009-encapsulated-fragmented-tree${i} nsga2-wsc.params false $BASE${i}$FILE;
 done

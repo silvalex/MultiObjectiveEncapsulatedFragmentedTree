@@ -6,10 +6,10 @@ WSC2009=$BASE"run1_2009/2009-fragments"
 
 # Process WSC-2008
 for i in {1..8}; do
-	java -cp program.jar wsc.FragmentEncapsulation WSC2008${i}
+	java -cp program.jar wsc.FragmentEncapsulation $WSC2008${i}
 done
 
 # Process WSC-2009
 for i in {1..5}; do
-	java -cp program.jar wsc.FragmentEncapsulation WSC2009${i}
+	java -cp program.jar wsc.FragmentEncapsulation $WSC2009${i}
 done
