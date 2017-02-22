@@ -40,7 +40,8 @@ public class FragmentEncapsulation {
 				    }
 				});
 
-				for (File f : files) {
+				for (int i = 0; i < 30; i++) {
+					File f = files[i];
 					System.out.printf("Reading file '%s'\n", f.getName());
 					try {
 						Scanner scan = new Scanner(f);
