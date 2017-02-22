@@ -32,7 +32,7 @@ public class FragmentEncapsulation {
 				Map<String, Integer> fragmentCountMap = new HashMap<String, Integer>();
 
 				// Read in each fragment file, and add the counts to the map
-				File dir = new File(directory + "/fragmentFiles");
+				File dir = new File(directory);
 				File [] files = dir.listFiles(new FilenameFilter() {
 				    @Override
 				    public boolean accept(File dir, String name) {
