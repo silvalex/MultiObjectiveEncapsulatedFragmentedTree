@@ -39,6 +39,9 @@ public class FragmentEncapsulation {
 				        return name.startsWith("fragments");
 				    }
 				});
+				
+				System.out.println(files);
+				System.exit(0);
 
 				for (File f : files) {
 					System.out.printf("Reading file '%s'\n", f.getName());
