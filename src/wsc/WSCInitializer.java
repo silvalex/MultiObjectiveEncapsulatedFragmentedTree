@@ -148,8 +148,9 @@ public class WSCInitializer extends SimpleInitializer {
 		try {
 			scan = new Scanner(encapsulatedFile);
 			while (scan.hasNextLine() && fragmentsRead < numFragments) {
-				String line = scan.nextLine();
-				Fragment f = generateFragmentFromString(line);
+				String fString = scan.next();
+				scan.nextInt(); // Throw count away for now
+				Fragment f = generateFragmentFromString(fString);
 				encapsulatedFragmentMap.put(f.root, f.predecessors);
 				fragmentsRead++;
 			}

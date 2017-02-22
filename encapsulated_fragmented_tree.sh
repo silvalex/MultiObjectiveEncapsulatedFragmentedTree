@@ -107,7 +107,7 @@ result=$FILE_RESULT_PREFIX$seed.stat
 front=$FILE_FRONT_PREFIX$seed.stat
 fragments=$FRAGMENT_PREFIX$seed.stat
 
-java -cp ecj.23.jar:program.jar ec.Evolve -file $3 -p seed.0=$seed -p stat.file=\$$result -p stat.front=\$$front -p fragment-log=\$$fragments -p count-fragments=$4
+java -cp ecj.23.jar:program.jar ec.Evolve -file $3 -p seed.0=$seed -p stat.file=\$$result -p stat.front=\$$front -p fragment-log=\$$fragments -p count-fragments=$4 -p encapsulated-file=$5
 
 echo ==AND NOW, HAVING DONE SOMETHING USEFUL AND CREATED SOME OUTPUT==
 ls -la
