@@ -71,7 +71,7 @@ public class WSCSpecies extends Species {
 		
 		// If using encapsulated, retrieve predecessors from the encapsulated map
 		if (useEncapsulated) {
-			Set<String> encapsulatedPredecessorNames = init.encapsulatedFragmentMap.get(s.name);
+			Set<String> encapsulatedPredecessorNames = selectEncapsulatedPredecessor(s.name, init.encapsulatedFragmentMap, init.random);
 			Set<Service> encapsulatedPredecessors = new HashSet<Service>();
 			for (String p: encapsulatedPredecessorNames) {
 				Service predecessor;
@@ -119,5 +119,10 @@ public class WSCSpecies extends Species {
 			}
 			return predecessors;
 		}
+	}
+	
+	private Set<String> selectEncapsulatedPredecessor(String root, Map<String, List<Set<String>>> map, WSCRandom random) {
+		List<Set<String>> options = map.get(root);
+		return options.get(random.nextInt(options.size()));
 	}
 }

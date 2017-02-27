@@ -154,7 +154,7 @@ public class WSCInitializer extends SimpleInitializer {
 				String fString = scan.next();
 				scan.nextInt(); // Throw count away for now
 				Fragment f = generateFragmentFromString(fString);
-				encapsulatedFragmentMap.put(f.root, f.predecessors);
+				addToEncapsulatedMap(encapsulatedFragmentMap, f.root, f.predecessors);
 				fragmentsRead++;
 			}
 			scan.close();
@@ -162,6 +162,19 @@ public class WSCInitializer extends SimpleInitializer {
 		catch (FileNotFoundException e) {
 			System.err.printf("Problem when reading encapsulated file '%s'.\n", encapsulatedFile.getName());
 			e.printStackTrace();
+		}
+	}
+	
+	private void addToEncapsulatedMap(Map<String, List<Set<String>>> map, String root, Set<String> predecessors) {
+		List<Set<String>> possibilities;
+		if (map.containsKey(root)) {
+			possibilities = map.get(root);
+			possibilities.add(predecessors);
+		}
+		else {
+			possibilities = new LinkedList<Set<String>>();
+			possibilities.add(predecessors);
+			map.put(root, possibilities);
 		}
 	}
 

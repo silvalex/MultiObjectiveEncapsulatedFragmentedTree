@@ -50,7 +50,7 @@ count-fragments                                = false
 select-encapsulated-prob                       = 0.5
 
 # The number of top fragments to encapsulate in phase II
-num-encapsulated-fragments                     = 10
+num-encapsulated-fragments                     = 50
 
 # Where the fragments counted during phase I get recorded
 fragment-log                                   = $fragments.stat
