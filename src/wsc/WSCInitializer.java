@@ -74,7 +74,7 @@ public class WSCInitializer extends SimpleInitializer {
 	 * organised in this way so that fragments can be easily recreated from
 	 * them.*/
 	public static Map<String, Integer> fragmentCountMap;
-	public static  Map<String, Set<String>> encapsulatedFragmentMap;
+	public static  Map<String, List<Set<String>>> encapsulatedFragmentMap;
 	public static boolean countFragments;
 	public static File fragmentLogFile;
 	public static File encapsulatedFile;
@@ -115,7 +115,7 @@ public class WSCInitializer extends SimpleInitializer {
 			fragmentLogFile = state.parameters.getFile(fragmentLogParam, null);
 		}
 		else {
-			encapsulatedFragmentMap = new HashMap<String, Set<String>>();
+			encapsulatedFragmentMap = new HashMap<String, List<Set<String>>>();
 			encapsulatedFile = state.parameters.getFile(encapsulatedFileParam, null);
 			numEncapsulated = state.parameters.getInt(numEncapsulatedParam, null);
 			selectEncapsulatedProb = state.parameters.getFloat(selectEncapsulatedProbParam, null);
@@ -145,7 +145,7 @@ public class WSCInitializer extends SimpleInitializer {
 		setupTime = System.currentTimeMillis() - startTime;
 	}
 
-	private void readEncapsulatedFragments(File encapsulatedFile, Map<String, Set<String>> encapsulatedFragmentMap, int numFragments) {
+	private void readEncapsulatedFragments(File encapsulatedFile, Map<String, List<Set<String>>> encapsulatedFragmentMap, int numFragments) {
 		Scanner scan;
 		int fragmentsRead = 0;
 		try {

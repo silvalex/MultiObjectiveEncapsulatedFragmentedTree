@@ -21,10 +21,10 @@ public class FragmentEncapsulation {
 			processDirectory(args[0]);
 		else
 			processDirectory(".");
-		
+
 		System.out.println("Done!");
 	}
-	
+
 	public static void processDirectory(String directory) {
 		// Get initial time
 				long startTime = System.currentTimeMillis();
@@ -78,10 +78,10 @@ public class FragmentEncapsulation {
 				try {
 					FileWriter writer = new FileWriter(encapsulatedFile);
 					for (Entry<String, Integer> fragment: fragmentList) {
-						if (!fragment.getKey().startsWith("end")) {
+						//if (!fragment.getKey().startsWith("end")) {
 							writer.append(String.format("%s %d", fragment.getKey(), fragment.getValue()));
 							writer.append("\n");
-						}
+						//}
 					}
 					writer.close();
 				}
