@@ -140,8 +140,8 @@ public class WSCInitializer extends SimpleInitializer {
 
 		populateTaxonomyTree();
 		relevant = getRelevantServices(serviceMap, taskInput, taskOutput);
-		//calculateNormalisationBounds(relevant); XXX
-		calculateNormalisationBounds(new HashSet<Service>(serviceMap.values()));
+		calculateNormalisationBounds(relevant); //XXX
+		//calculateNormalisationBounds(new HashSet<Service>(serviceMap.values()));
 		setupTime = System.currentTimeMillis() - startTime;
 	}
 
@@ -164,7 +164,7 @@ public class WSCInitializer extends SimpleInitializer {
 			e.printStackTrace();
 		}
 	}
-	
+
 	private void addToEncapsulatedMap(Map<String, List<Set<String>>> map, String root, Set<String> predecessors) {
 		List<Set<String>> possibilities;
 		if (map.containsKey(root)) {
