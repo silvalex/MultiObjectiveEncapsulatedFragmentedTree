@@ -1,7 +1,7 @@
 #!/bin/sh
 
 NUM_RUNS=50
-BASE=/vol/grid-solar/sgeusers/sawczualex/MO_encapsulated/run5_2009/2009-fragments
+BASE=/vol/grid-solar/sgeusers/sawczualex/MO_encapsulated/run8_2009/2009-fragments
 FILE=/encapsulated.stat
 
 for i in {1..5}; do

@@ -164,7 +164,7 @@ public class WSCInitializer extends SimpleInitializer {
 			e.printStackTrace();
 		}
 	}
-	
+
 	private void addToEncapsulatedMap(Map<String, List<Set<String>>> map, String root, Set<String> predecessors) {
 		List<Set<String>> possibilities;
 		if (map.containsKey(root)) {

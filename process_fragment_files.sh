@@ -1,8 +1,8 @@
 #!/bin/sh
 
 BASE=/vol/grid-solar/sgeusers/sawczualex/MO_encapsulated/
-WSC2008=$BASE"run4_2008/2008-fragments"
-WSC2009=$BASE"run4_2009/2009-fragments"
+WSC2008=$BASE"run6_2008/2008-fragments"
+WSC2009=$BASE"run6_2009/2009-fragments"
 
 # Process WSC-2008
 for i in {1..8}; do
