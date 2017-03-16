@@ -90,7 +90,7 @@ FILE_FRONT_PREFIX="front"
 # Copy the input files to the local directory
 #
 
-cp -r $DIR_PROGRAM"program.jar" .
+cp $DIR_PROGRAM"program.jar" .
 cp $DIR_PROGRAM"nsga2-wsc.params" .
 cp $ECJ_JAR .
 cp $1/* . # Copy datasets
@@ -113,7 +113,6 @@ echo ==AND NOW, HAVING DONE SOMETHING USEFUL AND CREATED SOME OUTPUT==
 ls -la
 
 # Now we move the output to a place to pick it up from later
-cd results
 if [ ! -d $DIR_OUTPUT ]; then
   mkdir $DIR_OUTPUT
 fi
