@@ -54,15 +54,15 @@ public class WSC extends Problem implements SimpleProblemForm {
 			f.setObjectives(state, objectives);
 			ind.evaluated = true;
 
-			// Find the unused fragments from the tree
-			Set<String> fragmentsToRemove = new HashSet<String>();
-			for (String s : tree.getPredecessorMap().keySet()) {
-			    if (!timeMap.containsKey(s))
-			        fragmentsToRemove.add(s);
-			}
-			// Clean up the unused fragments
-			for (String s : fragmentsToRemove)
-			    tree.getPredecessorMap().remove( s );
+//			// Find the unused fragments from the tree
+//			Set<String> fragmentsToRemove = new HashSet<String>();
+//			for (String s : tree.getPredecessorMap().keySet()) {
+//			    if (!timeMap.containsKey(s))
+//			        fragmentsToRemove.add(s);
+//			}
+//			// Clean up the unused fragments
+//			for (String s : fragmentsToRemove)
+//			    tree.getPredecessorMap().remove( s );
 
 			// If performing encapsulation, add fragments to fragment count map
 			if (WSCInitializer.countFragments) {
